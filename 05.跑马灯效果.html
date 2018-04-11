@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="./libs/vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<input type="button" value="浪起来" @click="lang">
+		<input type="button" value="低调" @click="stop">
+		<h4>{{msg}}</h4>
+	</div>
+</body>
+<script type="text/javascript">
+	//注意在vm的实例中  如果要获取data上的数据  或者调用methods中的方法  必须通过this.数据属性名   this.方法名
+	//这里的this就是表示我们new出来的vm实例对象
+	var vm = new Vue ({
+		el:"#app",
+		data:{
+			msg:"猥琐发育，别浪~~~~！",
+			intervalId:null
+		},
+		methods:{
+			lang () {
+				//防止点击创建多个定时器
+				if(this.intervalId  != null)  return
+				//箭头函数  内部的this永远和外部保持一致
+				this.intervalId = setInterval( () => {
+					//截取到头的第一个字符型
+					var start = this.msg.substring(0,1)
+					//截取到后面的所有字符
+					var end = this.msg.substring(1)
+					//重新拼接得到新的字符串
+					this.msg =  end + start 
+				},400)
+				
+
+				//注意：vm实例本身会自动监听data中所有数据的改变  只要数据一改变  就会自动把新的数据 
+				//从data上同步到页面上
+			},
+			stop () {
+				//停止定时器
+				clearInterval(this.intervalId)
+				//每当清除定时器时候  要重新将intervaoId置为null
+				this.intervalId = null
+			}
+		}
+	})
+</script>
+</html>

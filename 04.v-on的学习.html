@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="./libs/vue.js"></script>
+</head>
+<body>
+	<!-- new的Vue实例会控制这个元素中的所有属性 -->
+	<div id="app">
+		<!-- v-bind 提供用于绑定属性的指令 -->
+		<!-- v-on 事件绑定机制 -->
+	   <input type="button" value="按钮" v-on:click="show"></input>
+	</div>
+</body>
+<script type="text/javascript">
+	var vm = new Vue ({
+		el:"#app",
+		data:{  
+			mytitle:"这是自己定义的title"
+		},
+		methods:{  //methods中定义了vue实例中所有可用的方法
+			show:function () {
+				alert("嘻嘻")
+			}
+		}
+	})
+</script>
+</html>

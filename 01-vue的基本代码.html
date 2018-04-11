@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="./libs/vue.js"></script>
+</head>
+<body>
+	<!-- new的Vue实例会控制这个元素中的所有属性 -->
+	<div id="app">
+	   <p>{{msg}}</p>
+	</div>
+</body>
+<script type="text/javascript">
+	var vm = new Vue ({
+		el:"#app",//表示当前我们new的vue对象控制页面上的哪个区域
+		data:{  //data属性中存放的是el中要使用的数据
+			msg:"欢迎学习Vue"  //data上的所有属性直接使用  不用data.msg
+
+		}
+	})
+</script>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="./libs/vue.js"></script>
+	<style type="text/css">
+		.inner {
+			height: 100px;
+			width: 100px;
+			margin: 0 auto;
+			background: pink;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<!-- 阻止冒泡  .stop-->
+		<!-- <div class="inner" @click="divHandler">
+			<input type="button" value="点击" @click.stop="btnHandler">
+		</div> -->
+
+		<!--阻止事件的默认行为-->
+		<!-- <a href="https://www.baidu.com/" @click.prevent="linkClick">有问题去百度</a> -->
+
+		<!-- 使用 .capture 实现捕获触发事件   例如下面代码  点击button  先触发divHandler 再触发btnHandler -->
+		<!-- <div class="inner" @click.capture="divHandler">
+			<input type="button" value="点击" @click="btnHandler">
+		</div> -->
+
+		<!-- 使用.self  只有点击当前自己元素才会触发处理函数   -->
+		<!-- <div class="inner" @click.capture="divHandler">
+			<input type="button" value="点击" @click="btnHandler">
+		</div> -->
+		<!-- 使用.once只触发一次事件处理函数 -->
+		<input type="button" value="点击" @click.once="btnHandler">
+
+	</div>
+</body>
+<script type="text/javascript">
+	var vm = new Vue ({
+		el:"#app",
+		data:{  
+		
+		},
+		methods:{
+			divHandler () {
+				console.log("触发了div")
+			},
+			btnHandler () {
+				console.log("触发了btn")
+			},
+			linkClick () {
+				alert("触发了点击事件")
+			}
+		}
+	})
+</script>
+</html>

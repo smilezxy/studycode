@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="./libs/vue.js"></script>
+</head>
+<body>
+	<!-- new的Vue实例会控制这个元素中的所有属性 -->
+	<div id="app">
+		<!-- v-bind 提供用于绑定属性的指令 -->
+	   <input type="button" value="提示" v-bind:title="mytitle + '123' "></input>
+	</div>
+</body>
+<script type="text/javascript">
+	var vm = new Vue ({
+		el:"#app",
+		data:{  
+			mytitle:"这是自己定义的title"
+		}
+	})
+</script>
+</html>
