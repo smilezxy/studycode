@@ -19,13 +19,15 @@
 				</label>
 				<label>
 					Name：
-					<input type="text" class="form-control" v-model="name">
+					<input type="text" class="form-control" v-model="name" @keyup.enter="add">
 				</label>
 				<!-- 在vue中使用绑定机制  为元素指定事件处理函数时候  如果加了小括号就可以为函数传参了 -->
 				<input type="button" value="添加" class="btn btn-primary" @click="add">
 				<label>
+				<!-- 实现功能   页面一刷新或者初始化  这个input自动获取焦点 -->
+				<!-- 注意 Vue中所有的指令 在调用的时候都用v-开头 -->
 					搜索名称关键字：
-					<input type="text" class="form-control" v-model="keywords">
+					<input type="text" class="form-control" v-model="keywords" v-focus v-color="'blue'">
 				</label>
 			</div>
 		</div>
@@ -42,9 +44,9 @@
 				<tr v-for="item in search(keywords)" :key="item.id">
 					<td>{{item.id}}</td>
 					<td>{{item.name}}</td>
-					<td>{{item.ctime}}</td>
+					<td>{{item.ctime | timeFormat}}</td>
 					<td>
-						<a href="#" @click.prevent="del(item.id)">删除</a>
+						<a href="#" @click.prevent="del(item.id)" v-fontsize="20">删除</a>
 					</td>
 				</tr>
 			</tbody>
@@ -52,6 +54,56 @@
 	</div>
 </body>
 <script type="text/javascript">
+	//全局的过滤器  时间格式化
+	//Vue.filter('timeFormat',function(dateStr,pattern = '') {
+	//pattern = ''  防止形参没有传递  后面调用时候是undefined
+	Vue.filter('timeFormat',function(dateStr,pattern) {
+		//根据给定的时间字符串  得到特定的时间
+		var dt = new Date(dateStr)
+		var y = dt.getFullYear()
+		var m = (dt.getMonth()  + 1).toString().padStart(2,0)
+		var d = dt.getDate().toString().padStart(2,0)
+		var hh = dt.getHours().toString().padStart(2,0)
+		var mm = dt.getMinutes().toString().padStart(2,0)
+		var ss = dt.getSeconds().toString().padStart(2,0)
+		
+
+		//先统一转换成小写
+		//当转换后是 2018-4-14   让他成为2018-04-14  让不足两位的补0
+		if(pattern && pattern.toLowerCase() == 'yyyy-mm-dd') {
+			//return y + '-' + m + '-' + d
+			return `${y}-${m}-${d}`
+		}else if(pattern && pattern.toLowerCase() == 'yyyy-mm') {
+			return `${y}-${m}`
+		}else{
+			return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+		}
+
+	})
+	//其中参数1是指令名称，注意定义的时候，指令的名称不需要加v-前缀,调用时候需要
+ // 参数2是一个对象，这个对象身上，有一些指令的相关函数，                     
+	Vue.directive('focus',
+		//在每个函数中，第一个参数都是永远是el，表示被绑定指令的那个元素，这个el参数  是一个元素的js对象（dom对象） 这三个方法比较常用  具体的见文档
+		{
+		//每当指定绑定到元素上的时候，会立即执行此函数，只执行一次   此时元素未插入到dom中
+		bind:function () {},   
+		 //表示元素插入到dom中的时候会执行此函数，只触发一次
+        inserted :function (el) {
+        	el.focus()
+        }, 
+        //当vNode更新的时候会执行此函数，可能会触发多次 
+        updated :function () {}  
+        })
+
+
+	//自定义一个设置字体颜色的指令
+	Vue.directive('color', {
+		bind:function (el,binding) {
+			el.style.color = binding.value
+		},
+	})
+
+
 	var vm = new Vue ({
 		el:"#app",
 		data:{
@@ -108,6 +160,18 @@
 
 
 			}
+		},
+		//私有过滤器
+		filters:{
+			dateFormat:function (datastr,params) {
+
+			}
+		},
+	//指令函数的简写：大多数我们可能想在bind和update钩子上做重复动作，并不关心其他钩子函数，可以这样简写
+		directives:{
+			'fontsize':function (el,binding) { 
+				el.style.fontSize = parseInt(binding.value) + 'px'
+			}    
 		}
 	})
 </script>
