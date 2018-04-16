@@ -9,26 +9,32 @@
 	
 	<div id="app">
 		<!-- v-for循环普通数组 -->
-		<!-- <p v-for="(item,i) in list">索引值{{i}}______值{{item}}</p> -->
+		<!--  <p v-for="(item,i) in list">索引值{{i}}______值{{item}}</p> -->
+
 		<!-- 在遍历对象身上的键值对时候  除了有  val key   在第三个位置还有索引 index -->
-		<p v-for="(val,key) in user"></p>
+		<!-- v-for 迭代数字 -->
+
+		<!-- <p v-for="(val,key) in user"></p> -->
+		<p v-for="count in 10">这是第{{count}}次循环</p>
+
+
 	</div>
 </body>
 <script type="text/javascript">
 	var vm = new Vue ({
 		el:"#app",
 		data:{  
-			// list:[1,2,3,4,5,6]
+			//list:[1,2,3,4,5,6]
 			// list:[
 			// 	{id:1,name:"zs"},
 			// 	{id:2,name:"ls"},
 			// 	{id:3,name:"ww"},
 			// ]
-			user:{
-				id:1,
-				name:"zz",
-				gender:"man"
-			}
+			// user:{
+			// 	id:1,
+			// 	name:"zz",
+			// 	gender:"man"
+			// }
 		}
 	})
 </script>

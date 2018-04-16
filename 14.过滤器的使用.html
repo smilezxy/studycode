@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="./libs/vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<p>{{msg | msgFormat('疯狂')}}</p>
+	</div>
+</body>
+<script type="text/javascript">
+	Vue.filter('msgFormat',function (data,parm) {
+		// 字符串的replace方法  第一次参数除了传字符串以外  还可以传正则表达式
+		return data.replace(/傻傻/g,parm)
+	})
+	var vm = new Vue ({
+		el:"#app",
+		data:{  
+			msg:"傻傻的我，傻傻的你，傻傻的我们"
+		},
+		methods:{ 
+		}
+	})
+</script>
+</html>
