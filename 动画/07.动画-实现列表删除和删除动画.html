@@ -12,6 +12,10 @@
 			padding-left: 5px;
 			font-size: 12px;
 		}
+		li:hover {
+			background-color: pink;
+			transition: all 1s ease;
+		}
 		.v-enter,
 		.v-leave-to {
 			opacity: 0;
@@ -21,6 +25,16 @@
 		.v-leave-active {
 			transition: all 1s ease;
 		}
+
+		/*.v-move .v-leave-active配合使用，能够实现列表后续的元素，渐渐飘上来的效果*/
+		.v-move {
+			transition: all 0.8s ease;
+		}
+		.v-leave-active {
+			position: absolute;
+			width: 100%;
+		}
+
 	</style>
 </head>
 <body>
@@ -36,15 +50,17 @@
 			</label>
 			<input type="button" value="添加" @click="add">
 		</div>
-		<ul>
+		<!-- <ul> -->
 			<!-- 在实现列表过渡时候  如果需要过渡的元素是通过v-for循环渲染出来的话 需要使用 transition-group包裹 -->
 			<!-- 如果要为v-for循环出来的元素设备动画  必须为每个元素设备:key属性 -->
-			<transition-group>
-				<li v-for="item in list" :key="item.id">
+			<!-- 给 transition-group添加appear属性  可以实现页面刚展示出来，入场时候的效果-->
+			<!-- 通过设置tag属性  指定transition-group渲染成什么指定的元素，如果不指定，默认渲染为span  -->
+			<transition-group appear tag="ul">
+				<li v-for="(item,i) in list" :key="item.id" @click="del(i)">
 					{{item.id}}  -----   {{item.name}}
 				</li>
 			</transition-group>
-		</ul>
+		<!-- </ul> -->
 	</div>
 </body>
 <script type="text/javascript">
@@ -65,6 +81,9 @@
 				var car = {id:this.id,name:this.name,ctime:new Date()}
 				this.list.push(car)
 				this.id = this.name = ''
+			},
+			del (i) {
+				this.list.splice(i,1)
 			}
 		}
 	})
