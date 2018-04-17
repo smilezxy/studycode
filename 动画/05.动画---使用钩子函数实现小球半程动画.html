@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../libs/vue.js"></script>
+	<style type="text/css">
+		.ball {
+			width: 15px;
+			height: 15px;
+			border-radius: 50%;
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<input type="button" value="快到碗里来" @click="flag=!flag">
+		<!-- 使用transition元素  把需要动画控制的元素包裹起来 -->
+		<transition
+		@before-enter="beforeEnter"   @enter="enter"  @after-enter="afterEnter">
+			<div class="ball" v-show="flag"></div>
+		</transition>
+		
+	</div>
+</body>
+<script type="text/javascript">
+	var vm = new Vue ({
+		el:"#app",
+		data:{  
+			flag:false
+		},
+		methods:{ 
+			//el是指要执行动画的那个DOM元素
+			beforeEnter: function (el) {  //动画入场之前的样式  开始动画的样式
+				el.style.transform = "translate(0,0)"
+			},
+  			enter: function (el, done) {  //表示动画开始之后的样式  这里可以元素完成动画之后的状态
+  			  //这句话没有实际作用  但是不写的话  出不来动画行为  可以认为 el.offsetWidth会强制动画刷新
+  			  el.offsetWidth
+  			  el.style.transform = "translate(150px,250px)"
+  			  el.style.transition = "all 1s ease"
+  			  done()
+  			},
+  			//动画完成后
+  			afterEnter: function (el) { 
+  				this.flag = !this.flag 
+  			},
+		}
+	})
+</script>
+</html>

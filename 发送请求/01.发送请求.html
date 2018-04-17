@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../libs/vue.js"></script>
+	<!-- this.$http.get -->
+	<script src="../libs/vue-resource.js"></script>
+</head>
+<body>
+	<div id="app">
+		<input type="button" value="发送get请求" @click="getInfo">
+		<input type="button" value="发送post请求" @click="postInfo">
+		<input type="button" value="发送jsonp请求" @click="jsonpInfo">
+	</div>
+</body>
+<script type="text/javascript">
+	var vm = new Vue ({
+		el:"#app",
+		data:{  
+			
+		},
+		methods:{ 
+			getInfo () {
+				this.$http.get('http://vue.studyit.io/api/getlunbo').then(function (result) {
+					//通过result.body 拿到服务器返回的数据
+					console.log(result.body)
+				})
+			},
+			postInfo () {
+				//手动发起的post请求  默认没有表单格式 
+				//通过post方法的第三个参数  {emulateJSON:true}设置提交的内容类型为普通表单类型
+				this.$http.post('http://vue.studyit.io/api/post',{},{emulateJSON:true}).then(result => {
+					console.log(result.body)
+				})
+			},
+			jsonpInfo () {
+				this.$http.jsonp('http://vue.studyit.io/api/josnp').then(result => {
+					console.log(result.body)
+				})
+			}
+		}
+	})
+</script>
+</html>

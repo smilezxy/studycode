@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../libs/vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<input type="button" value="修改msg" @click="msg='no'" ref="msgInput">
+		<p ref="mybox">{{msg}}</p>
+	</div>
+</body>
+<script type="text/javascript">
+	var vm = new Vue ({
+		el:"#app",
+		data:{  
+			msg:"yes"
+		},
+		methods:{ 
+		},
+		//表示实例完全被创建之前  会执行这个方法  此时不能调用data里面的数据 以及methods的方法，他们都没有初始化
+		beforeCreate () {
+			console.log(this.msg)   //undefined
+		},
+		//data里面的数据 以及methods的方法已经初始化好了
+		created () {
+			console.log(this.msg)   //yes
+		},
+		// 此时，只是在内存中渲染好了模板，但是尚未渲染到页面上  页面中的元素并没有被真正替换，只是一些模板字符串
+		beforeMount () {
+			console.log(this.$refs.mybox)  //undefined
+		},
+		//表示内存中的模板已经真实的挂载到页面上，用户可以看到渲染好的页面  运行阶段的两个函数
+		mounted () {
+			console.log(this.$refs.mybox.innerText)   //yes
+		},
+		//数据被更新了，页面没有被更新
+		beforeUpdate () {
+			console.log('页面上元素的内容' + this.$refs.mybox.innerText)  //yes
+			console.log('data中数据' + this.msg)  //no
+		},
+		//此时页面和数据都是最新的
+		updated () {
+			console.log('页面上元素的内容' + this.$refs.mybox.innerText)  //no
+			console.log('data中数据' + this.msg)  //no
+		}
+	})
+</script>
+</html>

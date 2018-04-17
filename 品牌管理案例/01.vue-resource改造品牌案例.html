@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="../libs/bootstrap.css">
+	<script src="../libs/vue.js"></script>
+	<script src="../libs/vue-resource.js"></script>
+
+</head>
+<body>
+	<div id="app">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">添加品牌</h3>
+			</div>
+			<div class="panel-body form-inline">
+				<label>
+					Id：
+					<input type="text" class="form-control" v-model="id">
+				</label>
+				<label>
+					Name：
+					<input type="text" class="form-control" v-model="name">
+				</label>
+				<!-- 在vue中使用绑定机制  为元素指定事件处理函数时候  如果加了小括号就可以为函数传参了 -->
+				<input type="button" value="添加" class="btn btn-primary" @click="add">
+			</div>
+		</div>
+		<table class="table table-bordered table-hover table-striped">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Name</th>
+					<th>Ctime</th>
+					<th>Operation</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="item in list" :key="item.id">
+					<td>{{item.id}}</td>
+					<td>{{item.name}}</td>
+					<td>{{item.ctime}}</td>
+					<td>
+						<a href="#" @click.prevent="del(item.id)">删除</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+<script type="text/javascript">
+	//全局配置
+	Vue.http.options.root = 'http://vue.studyit.io/';
+	Vue.http.options.emulateJSON = true;
+	var vm = new Vue ({
+		el:"#app",
+		data:{  
+			id:'',
+			name:'', 
+			keywords:'', 
+			list:[  //存放所有品牌列表的数组
+				{id:1,name:'奔驰',ctime:new Date()},
+				{id:2,name:'宝马',ctime:new Date()},
+				{id:3,name:'奥迪',ctime:new Date()},
+
+			]
+			
+		},
+		created () {
+				this.getAllList()
+		},
+		methods:{ 
+			//启用全局配置根路径的时候  url应该以相对路径开头 前面不要加/
+			getAllList () { //获取所有车的品牌列表
+				//this.$http.get('/api/getproductlist').then(result => {
+				this.$http.get('api/getproductlist').then(result => {
+					var result = result.body
+					if(result.state == 0) {
+						this.list = result.message
+					}else {
+						alret("获取失败")
+					}
+				})
+			},
+			add () {  //添加品牌列表
+				//this.$http.post('api/addproduct',{name:this.name},{emulateJSON:true}).then(result => {
+					this.$http.post('api/addproduct',{name:this.name}).then(result => {
+						if(result.body.status == 0) {
+							this.getAllList()
+						}else {
+							alret("添加失败")
+						}
+				})
+				// var car = {id:this.id,name:this.name,ctime:new Date()}
+				// this.list.push(car)
+				// this.id = this.name = ''
+
+			},
+			del (id) {
+				this.$http.get('api/delproduct/' + id).then(result => {
+						if(result.body.status == 0) {
+							this.getAllList()
+						}else {
+							alret("删除失败")
+						}
+				})
+			},
+		}
+	})
+</script>
+</html>
