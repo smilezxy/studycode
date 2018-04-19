@@ -51,7 +51,7 @@
 </body>
 <script type="text/javascript">
 	//全局配置
-	Vue.http.options.root = 'http://vue.studyit.io/';
+	Vue.http.options.root = 'http://139.199.192.48:8888/';
 	Vue.http.options.emulateJSON = true;
 	var vm = new Vue ({
 		el:"#app",
@@ -74,7 +74,7 @@
 			//启用全局配置根路径的时候  url应该以相对路径开头 前面不要加/
 			getAllList () { //获取所有车的品牌列表
 				//this.$http.get('/api/getproductlist').then(result => {
-				this.$http.get('api/getproductlist').then(result => {
+				this.$http.get('api/getprodlist').then(result => {
 					var result = result.body
 					if(result.state == 0) {
 						this.list = result.message
