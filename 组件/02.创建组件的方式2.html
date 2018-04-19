@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../libs/vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<mycom2></mycom2>
+	</div>
+</body>
+<script type="text/javascript">
+	Vue.component('mycom2',{
+		template:'<h3>直接使用Vue.component创建的</h3>'  //这个模板只能有唯一一个根元素
+	})
+	
+	var vm = new Vue ({
+		el:"#app",
+		data:{  
+			
+		},
+		methods:{ 
+		}
+	})
+</script>
+</html>
