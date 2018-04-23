@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../libs/vue.js"></script>
+	<link rel="stylesheet" type="text/css" href="../libs/bootstrap.css">
+</head>
+<body>
+	<div id="app">
+		<comment-box @func="localComment"></comment-box>
+		<ul class="list-group">
+			<li class="list-group-item" v-for="item in list" :key="item.id">
+				<span class="badge">评论人：{{item.user}}</span>
+				{{item.content}}
+			</li>
+			
+		</ul>
+	</div>
+	<template id="temp">
+		<div>
+			<div class="form-group">
+				<label>评论人：</label>
+				<input type="text" class="form-control" v-model="user">
+			</div>
+			<div class="form-group">
+				<label>评论内容：</label>
+				<textarea class="form-control" v-model="content"></textarea>
+			</div>
+			<div class="form-group">
+				<input type="button" value="发表评论" class="btn btn-primary" @click="postComment">
+			</div>
+			
+		</div>
+	</template>
+</body>
+<script type="text/javascript">
+	//评论框组件
+	var commentBox = {
+		data () {
+			return {
+				user:'',
+				content:''
+			}
+		},
+		template:'#temp',
+		methods:{
+			postComment () {
+				var comment = {id:Date.now(),user:this.user,content:this.content}
+				var list = JSON.parse(localStorage.getItem('cmts') || '[]') 
+				//'[]'是防止获取的本地存储么有数据
+				list.unshift(comment)
+				localStorage.setItem('cmts',JSON.stringify(list))
+				this.user = this.content = ''
+				this.$emit('func')
+
+			}
+		}
+	}
+	var vm = new Vue ({
+		el:"#app",
+		data:{  
+			list:[
+				{id:Date.now(),user:'李白',content:'天生我材必有用'},
+				{id:Date.now(),user:'江小白',content:'劝君更尽一杯酒'},
+				{id:Date.now(),user:'小马',content:'风吹草低见牛羊'},
+			]
+		},
+		created () {
+			this.localComment()
+		},
+		methods:{
+			localComment () {
+				this.list = JSON.parse(localStorage.getItem('cmts') || '[]') 
+			} 
+		},
+		components:{
+			commentBox:commentBox
+		}
+	})
+</script>
+</html>

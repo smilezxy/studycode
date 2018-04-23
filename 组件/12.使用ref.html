@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../libs/vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<h3 ref="myh3">今天天趣不错</h3>
+		<input type="button" value="获取元素" @click="getElement">
+		<login ref="mylogin"></login>
+	</div>
+</body>
+<script type="text/javascript">
+	var login = {
+		template:'<h3>组件</h3>',
+		methods:{
+			show () {
+				console.log("调用了子组件的方法")
+			}
+		}
+	}
+	var vm = new Vue ({
+		el:"#app",
+		data:{  
+			
+		},
+		methods:{ 
+			getElement () {
+				console.log(this.$refs.myh3)
+				console.log(this.$refs.mylogin.show())
+			}
+		},
+		components:{
+			login:login
+		}
+	})
+</script>
+</html>
