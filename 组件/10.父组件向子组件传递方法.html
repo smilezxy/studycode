@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../libs/vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<!-- 父组件向子组件传递方法  使用的是时间绑定机制 -->
+		<com2 v-on:func="show"></com2>
+	</div>
+	<template id="temp">
+		<div>
+			<h3>子组件啊</h3>
+			<input type="button" value="点击" @click="myclick">
+		</div>
+		
+	</template>
+</body>
+<script type="text/javascript">
+	var com2 = {
+		template:'#temp',
+		data () {
+			return {
+				sonmsg:"笑嘻嘻"
+			}
+		},
+		methods:{
+				myclick () {
+					//拿到父组件传递过来的方法
+					//如果要像父组件拿过来的方法传递参数  func方法名后面就是参数
+					//this.$emit('func','123')
+					//子组件向父组件传递参数
+					this.$emit('func',this.sonmsg)
+				}
+			}
+	}
+	var vm = new Vue ({
+		el:"#app",
+		data:{  
+			datafromson:''
+		},
+		methods:{ 
+			show (data) {
+				this.datafromson = data
+				console.log('调用父组件中的show方法------' + data)
+			}
+		},
+		components:{
+			com2:com2,
+			
+		}
+	})
+</script>
+</html>
