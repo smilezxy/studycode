@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../libs/vue.js"></script>
+	<script src="../libs/vue-router.js"></script>
+</head>
+<body>
+	<div id="app">
+		
+	</div>
+</body>
+<script type="text/javascript">
+	var login = {
+		template:'<h3>登录</h3>'
+	}
+	//创建一个路由对象 导入包之后  在window的全局对象中就有了一个路由的构造函数  VueRouter
+	//在new路由对象的时候  可以为构造函数  传递一个配置对象
+	var routerObj  = new VueRouter({
+		routes:[  //路由匹配规则
+		//每个路由规则都是一个对象  这个规则对象身上必须有两个属性  
+		//属性1 是path  监听哪个路由链接地址
+		//属性2  是component  表示如果路由是前面匹配到的path  就展示这个组件
+		//属性：component的属性值必须是一个组件的模板名称  不能是组件的引用名称
+		{path:'/login',component:login}
+		]
+	})
+	var vm = new Vue ({
+		el:"#app",
+		data:{  
+			
+		},
+		methods:{ 
+		}
+	})
+</script>
+</html>
