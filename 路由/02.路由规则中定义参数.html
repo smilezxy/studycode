@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../libs/vue.js"></script>
+	<script src="../libs/vue-router.js"></script>
+	<style type="text/css">
+	</style>
+</head>
+<body>
+	<div id="app">
+		<router-link to="/login?id=10&name=zs">登陆</router-link>
+		<router-link to="/register">注册</router-link>
+		<router-view></router-view>
+	</div>
+</body>
+<script type="text/javascript">
+	var login = {
+		template:'<h3>登录----{{$route.query.id}}</h3>',
+		created () {  //组件的生命周期钩子函数
+			console.log(this.$route.query.id)
+		}
+	}
+	var register = {
+		template:'<h3>注册</h3>'
+	}
+	var routerObj  = new VueRouter({
+		routes:[ 
+		{path:'/',redirect:'/login'},  
+		{path:'/login',component:login},
+		{path:'/register',component:register}
+		],
+	})
+	var vm = new Vue ({
+		el:"#app",
+		data:{  
+			
+		},
+		methods:{ 
+		},
+		router:routerObj 
+	})
+</script>
+</html>
