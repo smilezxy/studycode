@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../libs/vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<!-- 我们要监听文本数据的改变  这样才知道什么时候拼接处fullname -->
+		<input type="text" v-model="firstname" @keyup="getFullName"> + 
+		<input type="text" v-model="lastname" @keyup="getFullName">  =
+		<input type="text" v-model="fullname">  
+	</div>
+</body>
+<script type="text/javascript">
+	var vm = new Vue ({
+		el:"#app",
+		data:{  
+			firstname:'',
+			lastname:'',
+			fullname:''
+		},
+		methods:{ 
+			getFullName () {
+				this.fullname = this.firstname + this.lastname
+			}
+		}
+	})
+</script>
+</html>
