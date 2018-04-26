@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../libs/vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<!-- 我们要监听文本数据的改变  这样才知道什么时候拼接处fullname -->
+		<input type="text" v-model="firstname"> + 
+		<input type="text" v-model="lastname">  =
+		<input type="text" v-model="fullname">  
+	</div>
+</body>
+<script type="text/javascript">
+	var vm = new Vue ({
+		el:"#app",
+		data:{  
+			firstname:'',
+			lastname:'',
+			fullname:''
+		},
+		methods:{ 
+			
+		},
+		watch:{  //使用这个属性可以监听data中指定数据的变化  然后触发这个watch中对应的function函数
+			firstname:function (newVal,oldView) {
+				//this.fullname = this.firstname + this.lastname
+				this.fullname = newVal + '-' + this.lastname
+			},
+			lastname:function (newVal) {
+				//this.fullname = this.firstname + this.lastname
+				this.fullname = this.firstname + '-' + newVal
+			}
+
+		}
+	})
+</script>
+</html>

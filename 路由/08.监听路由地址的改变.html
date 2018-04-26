@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../libs/vue.js"></script>
+	<script src="../libs/vue-router.js"></script>
+	<style type="text/css">
+		.roter-link-active,.myactive {
+			color: red;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<!-- <a href="#/login">登陆</a>
+		<a href="#/register">注册</a> -->
+		<router-link to="/login">登陆</router-link>
+		<router-link to="/register">注册</router-link>
+		<!-- 这是vue-router提供的元素  专门用来当作占位符的  路由规则匹配上的组件就会展示到这 -->
+		<router-view></router-view>
+	</div>
+</body>
+<script type="text/javascript">
+	var login = {
+		template:'<h3>登录</h3>'
+	}
+	var register = {
+		template:'<h3>注册</h3>'
+	}
+	//创建一个路由对象 导入包之后  在window的全局对象中就有了一个路由的构造函数  VueRouter
+	//在new路由对象的时候  可以为构造函数  传递一个配置对象
+	var routerObj  = new VueRouter({
+		routes:[  //路由匹配规则
+		//每个路由规则都是一个对象  这个规则对象身上必须有两个属性  
+		//属性1 是path  监听哪个路由链接地址
+		//属性2  是component  表示如果路由是前面匹配到的path  就展示这个组件
+		//属性：component的属性值必须是一个组件的模板名称  不能是组件的引用名称
+		{path:'/',redirect:'/login'},  //这里的redirect  重定向  强制展示哪个组件
+		{path:'/login',component:login},
+		{path:'/register',component:register}
+		],
+		//修改高亮默认的css类名  默认是roter-link-active
+		linkActiveClass:'myactive'
+	})
+	var vm = new Vue ({
+		el:"#app",
+		data:{  
+			
+		},
+		methods:{ 
+		},
+		router:routerObj, //将路由规则对象注册到vm实例上  用来监听url对象  来展示对应的组件
+		watch:{
+			'$route.path':function (newVal,oldView) {
+				console.log(newVal + '------' + oldView)
+			}
+		}
+	})
+</script>
+</html>
