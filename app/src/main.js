@@ -16,9 +16,15 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 
+//导入vue-resource
+import VueResource from "vue-resource"
+Vue.use(VueResource)
+
 //按需导入Mint-UI组件
-import { Header } from 'mint-ui';
+import { Header,Swipe, SwipeItem} from 'mint-ui';
 Vue.component(Header.name, Header);
+Vue.component(Swipe.name, Swipe);
+Vue.component(SwipeItem.name, SwipeItem);
 
 import '../libs/mui/css/mui.css'
 import '../libs/mui/css/icons-extra.css'
